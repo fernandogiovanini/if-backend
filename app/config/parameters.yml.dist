@@ -2,11 +2,11 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
+    database_host: $_SERVER['POSTGRES_1_PORT_5432_TCP_ADDR']
+    database_port: $_SERVER['POSTGRES_1_PORT_5432_TCP_PORT']
+    database_name: $_SERVER['POSTGRES_ENV_POSTGRES_DB']
+    database_user: $_SERVER['POSTGRES_ENV_POSTGRES_USER']
+    database_password: $_SERVER['POSTGRES_ENV_POSTGRES_PASSWORD']
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
