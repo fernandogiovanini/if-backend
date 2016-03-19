@@ -1,0 +1,53 @@
+data:
+  image: busybox
+  volumes:
+    - ./:/usr/share/nginx/html/:rw
+
+postgres:
+  image: postgres:9.5
+  volumes:
+    - /var/lib/postgresql/data/
+  environment:
+    - POSTGRES_PASSWORD=qaws9987yuu
+    - POSTGRES_USER=indicefodase
+    - POSTGRES_DB=indicefodase
+  ports:
+    - 5432:5432
+
+phpfpm:
+  build: ./dev-env/phpfpm/.
+  ports:
+    - 9000
+  volumes:
+      - ./dev-env/phpfpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+  volumes_from:
+    - data
+  links:
+    - postgres
+    - beanstalkd
+
+nginx:
+  image: nginx:1.9
+  volumes:
+    - ./dev-env/nginx/default.conf:/etc/nginx/conf.d/default.conf
+  volumes_from:
+    - data
+  ports:
+    - 80:80
+  links:
+    - phpfpm
+
+beanstalkd:
+  image: schickling/beanstalkd
+  expose:
+    - 11300
+
+beanstalkd-console:
+  image: schickling/beanstalkd-console
+  links:
+    - beanstalkd
+  ports:
+    - 2080:2080
+
+
+
