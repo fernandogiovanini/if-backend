@@ -1,5 +1,5 @@
-#Backend para o Índice Foda-se
----
+Backend para o Índice Foda-se
+=============================
 
 ##Para iniciar o ambiente de desenvovimento
 
@@ -16,3 +16,10 @@ docker-compose up -d
 + Console do Beanstalkd em [http://localhost:2080](http://localhost:2080)
 
 Mais informações dos serviços no arquivo [docker-compose.yml](./docker-compose.yml)
+
+##Para executar o composer
+
+ ```
+cd if-backend
+docker-compose run phpfpm composer
+```
