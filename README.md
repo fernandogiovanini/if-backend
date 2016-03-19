@@ -23,3 +23,10 @@ Mais informações dos serviços no arquivo [docker-compose.yml](./docker-compos
 cd if-backend
 docker-compose run phpfpm composer
 ```
+
+##Para executar o PHPUnit
+
+ ```
+cd if-backend
+docker-compose run phpfpm phpunit
+```

@@ -27,6 +27,11 @@ RUN docker-php-ext-install opcache
 # Instala o composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Instala o PHPUnit
+RUN composer global require phpunit/phpunit:*
+ENV PATH /root/.composer/vendor/bin:$PATH
+RUN ln -s /root/.composer/vendor/bin/phpunit /usr/bin/phpunit
+
 # Instala o Symfony3
 RUN curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony && chmod a+x /usr/local/bin/symfony
 
