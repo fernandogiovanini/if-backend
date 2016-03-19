@@ -20,6 +20,7 @@ phpfpm:
     - 9000
   volumes:
       - ./dev-env/phpfpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./dev-env/phpfpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
   volumes_from:
     - data
   links:
