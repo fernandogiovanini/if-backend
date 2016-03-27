@@ -30,9 +30,13 @@
 # PHPUnit
 /app/phpunit.xml
 /phpunit.xml
+/web/coverage/
 
 # Build data
 /build/
 
 # Composer PHAR
 /composer.phar
+
+/phpfpm
+/phpunit

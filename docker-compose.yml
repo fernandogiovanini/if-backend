@@ -21,6 +21,7 @@ phpfpm:
   volumes:
       - ./dev-env/phpfpm/php.ini:/usr/local/etc/php/conf.d/php.ini
       - ./dev-env/phpfpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - /tmp/:/tmp/:rw
   volumes_from:
     - data
   links:
@@ -50,5 +51,14 @@ beanstalkd-console:
   ports:
     - 2080:2080
 
-
+phpfpm-no-xdebug:
+  build: ./dev-env/phpfpm-no-xdebug/.
+  volumes:
+      - ./dev-env/phpfpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - /tmp/:/tmp/:rw
+  volumes_from:
+    - data
+  links:
+    - postgres
+    - beanstalkd
 

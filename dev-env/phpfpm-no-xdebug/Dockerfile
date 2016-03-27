@@ -15,12 +15,6 @@ RUN apt-get install -y libmcrypt-dev \
                       && docker-php-ext-install zip \
                       && docker-php-ext-install pdo_pgsql;
 
-# Instala o XDEBUG
-RUN yes | pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
-
 # Instala o opcache
 RUN docker-php-ext-install opcache
 
