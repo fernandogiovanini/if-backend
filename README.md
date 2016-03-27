@@ -21,12 +21,19 @@ Mais informações dos serviços no arquivo [docker-compose.yml](./docker-compos
 
  ```
 cd if-backend
-docker-compose run phpfpm composer
+docker-compose run phpfpm-no-xdebug composer <parametros>
 ```
 
 ##Para executar o PHPUnit
 
  ```
 cd if-backend
-docker-compose run phpfpm phpunit
+docker-compose run phpfpm phpunit <parametros>
+```
+
+##Para executar o php-cs-fixer
+
+ ```
+cd if-backend
+docker-compose run phpfpm-no-xdebug php-cs-fixer <parametros>
 ```
