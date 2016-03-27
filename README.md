@@ -1,6 +1,8 @@
 Backend para o Índice Foda-se
 =============================
 
+[![Build Status](https://travis-ci.org/fernandogiovanini/if-backend.svg?branch=master)](https://travis-ci.org/fernandogiovanini/if-backend)
+
 ##Para iniciar o ambiente de desenvovimento
 
 ```
