@@ -19,6 +19,14 @@ docker-compose up -d
 
 Mais informações dos serviços no arquivo [docker-compose.yml](./docker-compose.yml)
 
+
+##Para instalar o projeto
+
+ ```
+cd if-backend
+docker-compose run phpfpm-no-xdebug composer install
+```
+
 ##Para executar o composer
 
  ```
