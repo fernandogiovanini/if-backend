@@ -28,7 +28,7 @@ class NewsRatingIdTest extends \PHPUnit_Framework_TestCase
     {
         $newsRatingId = NewsRatingId::generate();
 
-        $this->assertInstanceOf('Ramsey\Uuid\Uuid', $newsRatingId->id());
+        $this->assertInternalType('string', $newsRatingId->id());
     }
 
     /**
@@ -59,7 +59,7 @@ class NewsRatingIdTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             $newsRatingId->equalsTo(
-                NewsRatingId::create($newsRatingId->id()->toString())
+                NewsRatingId::create($newsRatingId->id())
             ));
     }
 

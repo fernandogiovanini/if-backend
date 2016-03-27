@@ -23,10 +23,10 @@ class NewsIdTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function should_be_uuid_instance()
+    public function should_be_string()
     {
         $newsId = NewsId::generate();
-        $this->assertInstanceOf('Ramsey\Uuid\Uuid', $newsId->id());
+        $this->assertInternalType('string', $newsId->id());
     }
 
     /**
@@ -36,7 +36,7 @@ class NewsIdTest extends \PHPUnit_Framework_TestCase
     {
         $newsId = NewsId::generate();
         $this->assertTrue($newsId->equalsTo(
-            NewsId::create($newsId->id()->toString())
+            NewsId::create($newsId->id())
         ));
     }
 

@@ -50,9 +50,9 @@ class NewsRatingDtoDataTransformerTest extends \PHPUnit_Framework_TestCase
         $newsRatingDto = $dataTransformer->read();
 
         $this->assertInstanceOf('Application\Service\Rating\NewsRatingDto', $newsRatingDto);
-        $this->assertEquals($newsRatingDto->getNewsRatingId(), $newsRating->id()->id()->toString());
-        $this->assertEquals($newsRatingDto->getUserId(), $user->id()->id()->toString());
-        $this->assertEquals($newsRatingDto->getNewsId(), $news->id()->id()->toString());
+        $this->assertEquals($newsRatingDto->getNewsRatingId(), $newsRating->id()->id());
+        $this->assertEquals($newsRatingDto->getUserId(), $user->id()->id());
+        $this->assertEquals($newsRatingDto->getNewsId(), $news->id()->id());
         $this->assertEquals($newsRatingDto->getRating(), Rating::fodaSe()->value());
     }
 }

@@ -17,7 +17,7 @@ class InMemoryUserRepository implements UserRepository
 
     public function add(User $user)
     {
-        $this->users[$user->id()->id()->toString()] = $user;
+        $this->users[$user->id()->id()] = $user;
     }
 
     public function findByUserId(UserId $userId)

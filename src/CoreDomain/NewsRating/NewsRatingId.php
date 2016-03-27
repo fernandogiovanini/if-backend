@@ -15,7 +15,7 @@ class NewsRatingId
 
     private function __construct(Uuid $id)
     {
-        $this->id = $id;
+        $this->id = $id->toString();
     }
 
     public static function generate()
@@ -32,13 +32,13 @@ class NewsRatingId
         return new self(Uuid::fromString($newsRatingId));
     }
 
-    public function id():Uuid
+    public function id()
     {
         return $this->id;
     }
 
     public function equalsTo(NewsRatingId $newsRatingId):bool
     {
-        return $this->id()->toString() === $newsRatingId->id()->toString();
+        return $this->id() === $newsRatingId->id();
     }
 }

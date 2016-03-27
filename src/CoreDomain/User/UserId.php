@@ -15,7 +15,7 @@ class UserId
 
     private function __construct($id)
     {
-        $this->id = $id;
+        $this->id = $id->toString();
     }
 
     public static function create($id):self
@@ -34,10 +34,10 @@ class UserId
 
     public function equalsTo(UserId $userId):bool
     {
-        return $this->id()->toString() === $userId->id()->toString();
+        return $this->id() === $userId->id();
     }
 
-    public function id():Uuid
+    public function id()
     {
         return $this->id;
     }

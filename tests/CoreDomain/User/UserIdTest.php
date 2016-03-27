@@ -26,7 +26,7 @@ class UserIdTest extends \PHPUnit_Framework_Testcase
     public function should_be_uuid_instance()
     {
         $userId = UserId::generate();
-        $this->assertInstanceOf('Ramsey\Uuid\Uuid', $userId->id());
+        $this->assertInternalType('string', $userId->id());
     }
 
     /**
@@ -36,7 +36,7 @@ class UserIdTest extends \PHPUnit_Framework_Testcase
     {
         $userId = UserId::generate();
         $this->assertTrue($userId->equalsTo(
-            UserId::create($userId->id()->toString())
+            UserId::create($userId->id())
         ));
     }
 
@@ -46,7 +46,7 @@ class UserIdTest extends \PHPUnit_Framework_Testcase
     public function should_be_created_from_string()
     {
         $userId = UserId::create('26d8022e-f45d-4399-a192-b8d7bbb9e206');
-        $this->assertEquals('26d8022e-f45d-4399-a192-b8d7bbb9e206', $userId->id()->toString());
+        $this->assertEquals('26d8022e-f45d-4399-a192-b8d7bbb9e206', $userId->id());
     }
 
     /**

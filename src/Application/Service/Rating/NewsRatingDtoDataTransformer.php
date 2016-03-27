@@ -16,9 +16,9 @@ class NewsRatingDtoDataTransformer implements NewsRatingDataTransformer
     public function write(NewsRating $newsRating)
     {
         $this->newsRating = new NewsRatingDto();
-        $this->newsRating->setNewsRatingId($newsRating->id()->id()->toString());
-        $this->newsRating->setUserId($newsRating->user()->id()->id()->toString());
-        $this->newsRating->setNewsId($newsRating->news()->id()->id()->toString());
+        $this->newsRating->setNewsRatingId($newsRating->id()->id());
+        $this->newsRating->setUserId($newsRating->user()->id()->id());
+        $this->newsRating->setNewsId($newsRating->news()->id()->id());
         $this->newsRating->setRating($newsRating->rating()->value());
     }
 
