@@ -9,8 +9,7 @@ namespace Application\Service\Rating;
 
 use CoreDomain\NewsRating\NewsRating;
 
-interface NewsRatingDataTransformer
-{
+interface NewsRatingDataTransformer{
     public function write(NewsRating $newsRating);
     public function read();
 }

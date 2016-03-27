@@ -53,13 +53,16 @@ class OneNewsRatingPerUserSpecificationTest extends \PHPUnit_Framework_TestCase
             Rating::caguei());
         $newsRatingRepositoryMock =
             $this->getMockBuilder('CoreDomain\NewsRating\NewsRatingRepository')->getMock();
-        $newsRatingRepositoryMock->method('findByUserAndNews')->will($this->returnArgument(null));
+        $newsRatingRepositoryMock->method('findByUserAndNews')->will($this->returnValue(null));
 
         $oneNewsRatingPerUserSpecification = new OneNewsRatingPerUserSpecification($newsRatingRepositoryMock);
 
         $this->assertTrue($oneNewsRatingPerUserSpecification->isSatisfiedBy($newsRating));
     }
 
+    /**
+     * @test
+     */
     public function should_not_allow_two_ratings_per_user()
     {
         $newsRating = $this->createNewsRating(
@@ -68,7 +71,7 @@ class OneNewsRatingPerUserSpecificationTest extends \PHPUnit_Framework_TestCase
             Rating::caguei());
         $newsRatingRepositoryMock =
             $this->getMockBuilder('CoreDomain\NewsRating\NewsRatingRepository')->getMock();
-        $newsRatingRepositoryMock->method('findByUserAndNews')->will($this->returnArgument(array(1)));
+        $newsRatingRepositoryMock->method('findByUserAndNews')->will($this->returnValue([1]));
 
         $oneNewsRatingPerUserSpecification = new OneNewsRatingPerUserSpecification($newsRatingRepositoryMock);
 

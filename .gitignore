@@ -40,3 +40,4 @@
 
 /phpfpm
 /phpunit
+/php-cs-fixer
