@@ -7,10 +7,12 @@
  */
 namespace Application\Service\Rating;
 
-use CoreDomain\NewsRating\NewsRating;
+use CoreDomain\News\News;
+use CoreDomain\News\Rating;
+use CoreDomain\User\User;
 
 interface NewsRatingDataTransformer
 {
-    public function write(NewsRating $newsRating);
+    public function write(News $news, User $user, Rating $rating);
     public function read();
 }

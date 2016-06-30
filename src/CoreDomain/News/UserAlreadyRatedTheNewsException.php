@@ -5,7 +5,7 @@
  * Date: 25/03/16
  * Time: 22:32.
  */
-namespace CoreDomain\NewsRating;
+namespace CoreDomain\News;
 
 class UserAlreadyRatedTheNewsException extends \DomainException
 {

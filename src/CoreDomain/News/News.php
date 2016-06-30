@@ -7,33 +7,72 @@
  */
 namespace CoreDomain\News;
 
-use CoreDomain\NewsRating\NewsRatingId;
-use CoreDomain\NewsRating\Rating;
-use CoreDomain\NewsRating\NewsRating;
 use CoreDomain\User\User;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class News
 {
     private $id;
     private $url;
     private $title;
+    private $publishedDate;
+    private $newsRating;
+
     private $cagueiCount;
     private $fodaSeCount;
     private $enfiaNoCuCount;
 
-    public function __construct(NewsId $id, Url $url, $title)
+    public function __construct(NewsId $id, Url $url, $title/*, \DateTime $publishedDate*/)
     {
         $this->id = $id;
         $this->url = $url;
         $this->title = $title;
+//        $this->publishedDate = $publishedDate;
+        $this->newsRating = new ArrayCollection();
+
         $this->cagueiCount = 0;
         $this->fodaSeCount = 0;
         $this->enfiaNoCuCount = 0;
     }
 
-    public function rate(Rating $rating, User $user):NewsRating
+    public function rate(Rating $rating, User $user)
     {
-        return new NewsRating(NewsRatingId::generate(), $this, $rating, $user);
+        if ($this->wasRatedBy($user)) {
+            throw new UserAlreadyRatedTheNewsException();
+        }
+        $this->newsRating->add(new NewsRating($rating, $user));
+    }
+
+    public function wasRatedByUserAs(Rating $rating, User $user):bool
+    {
+        foreach ($this->newsRating as $newsRating) {
+            if ($newsRating->wasRatedBy($user) && $newsRating->wasRatedAs($rating)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function wasRatedBy(User $user):bool
+    {
+        try {
+            $this->userRating($user);
+        } catch (UserRatingNotFoundException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function userRating(User $user):Rating
+    {
+        foreach ($this->newsRating as $newsRating) {
+            if ($newsRating->wasRatedBy($user)) {
+                return $newsRating->rating();
+            }
+        }
+        throw new UserRatingNotFoundException();
     }
 
     public function id():NewsId

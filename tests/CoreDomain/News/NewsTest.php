@@ -9,11 +9,12 @@ namespace Test\CoreDomain\News;
 
 use CoreDomain\News\News;
 use CoreDomain\News\NewsId;
-use CoreDomain\NewsRating\Rating;
+use CoreDomain\News\Rating;
 use CoreDomain\News\Url;
 use CoreDomain\User\Email;
 use CoreDomain\User\User;
 use CoreDomain\User\UserId;
+use CoreDomainBundle\CoreDomainBundle;
 
 class NewsTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,32 +36,28 @@ class NewsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function should_return_news_rating()
+    public function should_be_rated_by_user_as_foda_se()
     {
         $news = $this->generateNews();
         $user = $this->generateUser();
 
-        $newsRating = $news->rate(
-            Rating::caguei(),
-            $user);
+        $news->rate(Rating::fodaSe(), $user);
 
-        $this->assertInstanceOf('CoreDomain\NewsRating\NewsRating', $newsRating);
+        $this->assertTrue($news->wasRatedByUserAs(Rating::fodaSe(), $user));
     }
 
     /**
      * @test
      */
-    public function should_be_created_with_news_rating_id_news_user_news_rating()
+    public function should_not_be_rated_by_user()
     {
         $news = $this->generateNews();
         $user = $this->generateUser();
+        $otherUser = $this->generateUser();
 
-        $newsRating = $news->rate(Rating::fodaSe(), $user);
+        $news->rate(Rating::fodaSe(), $user);
 
-        $this->assertInstanceOf('CoreDomain\NewsRating\NewsRatingId', $newsRating->id());
-        $this->assertTrue($newsRating->user()->equalsTo($user));
-        $this->assertTrue($newsRating->rating()->equalsTo(Rating::fodaSe()));
-        $this->assertTrue($newsRating->news()->equalsTo($news));
+        $this->assertFalse($news->wasRatedByUserAs(Rating::fodaSe(), $otherUser));
     }
 
     /**
@@ -136,5 +133,32 @@ class NewsTest extends \PHPUnit_Framework_TestCase
         $otherNews = $this->generateNews();
 
         $this->assertFalse($news->equalsTo($otherNews));
+    }
+
+    /**
+     * @test
+     */
+    public function should_be_rated_by_user_as_foda_se_2()
+    {
+        $news = $this->generateNews();
+        $user = $this->generateUser();
+
+        $news->rate(Rating::fodaSe(), $user);
+
+        $rating = $news->userRating($user);
+
+        $this->assertEquals(Rating::fodaSe(), $rating);
+    }
+
+    /**
+     * @test
+     * @expectedException CoreDomain\News\UserRatingNotFoundException
+     */
+    public function should_not_find_user_rating()
+    {
+        $news = $this->generateNews();
+        $user = $this->generateUser();
+
+        $news->userRating($user);
     }
 }

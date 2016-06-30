@@ -7,19 +7,20 @@
  */
 namespace Application\Service\Rating;
 
-use CoreDomain\NewsRating\NewsRating;
+use CoreDomain\News\News;
+use CoreDomain\News\Rating;
+use CoreDomain\User\User;
 
 class NewsRatingDtoDataTransformer implements NewsRatingDataTransformer
 {
     private $newsRating;
 
-    public function write(NewsRating $newsRating)
+    public function write(News $news, User $user, Rating $rating)
     {
         $this->newsRating = new NewsRatingDto();
-        $this->newsRating->setNewsRatingId($newsRating->id()->id());
-        $this->newsRating->setUserId($newsRating->user()->id()->id());
-        $this->newsRating->setNewsId($newsRating->news()->id()->id());
-        $this->newsRating->setRating($newsRating->rating()->value());
+        $this->newsRating->setUserId($user->id()->id());
+        $this->newsRating->setNewsId($news->id()->id());
+        $this->newsRating->setRating($rating->value());
     }
 
     public function read()

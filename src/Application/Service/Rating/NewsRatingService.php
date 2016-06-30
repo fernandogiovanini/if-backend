@@ -11,10 +11,7 @@ use CoreDomain\News\News;
 use CoreDomain\News\NewsId;
 use CoreDomain\News\NewsRepository;
 use CoreDomain\News\NewsNotFoundException;
-use CoreDomain\NewsRating\NewsRatingRepository;
-use CoreDomain\NewsRating\OneNewsRatingPerUserSpecification;
-use CoreDomain\NewsRating\Rating;
-use CoreDomain\NewsRating\UserAlreadyRatedTheNewsException;
+use CoreDomain\News\Rating;
 use CoreDomain\User\User;
 use CoreDomain\User\UserId;
 use CoreDomain\User\UserNotFoundException;
@@ -22,17 +19,14 @@ use CoreDomain\User\UserRepository;
 
 class NewsRatingService
 {
-    private $newsRatingRepository;
     private $userRepository;
     private $newsRepository;
     private $dataTransformer;
 
     public function __construct(NewsRatingDataTransformer $dataTransformer,
-                                NewsRatingRepository $newsRatingRepository,
                                 UserRepository $userRepository,
                                 NewsRepository $newsRepository)
     {
-        $this->newsRatingRepository = $newsRatingRepository;
         $this->userRepository = $userRepository;
         $this->newsRepository = $newsRepository;
         $this->dataTransformer = $dataTransformer;
@@ -50,16 +44,11 @@ class NewsRatingService
             throw new NewsNotFoundException();
         }
 
-        $newsRating = $news->rate(Rating::fromId($request->getRatingId()), $user);
+        $news->rate(Rating::fromId($request->getRatingId()), $user);
 
-        $oneNewsRatingPerUserSpecification = new OneNewsRatingPerUserSpecification($this->newsRatingRepository);
-        if (!$oneNewsRatingPerUserSpecification->isSatisfiedBy($newsRating)) {
-            throw new UserAlreadyRatedTheNewsException();
-        }
+        $this->newsRepository->add($news);
 
-        $this->newsRatingRepository->add($newsRating);
-
-        $this->dataTransformer->write($newsRating);
+        $this->dataTransformer->write($news, $user, $news->userRating($user));
 
         return $this->dataTransformer;
     }

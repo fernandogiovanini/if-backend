@@ -5,7 +5,7 @@
  * Date: 19/03/16
  * Time: 21:06.
  */
-namespace CoreDomain\NewsRating;
+namespace CoreDomain\News;
 
 /**
  * Class Rate.

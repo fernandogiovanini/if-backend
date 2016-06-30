@@ -7,7 +7,7 @@
  */
 namespace Test\CoreDomain\News;
 
-use CoreDomain\NewsRating\Rating;
+use CoreDomain\News\Rating;
 
 class RatingTest extends \PHPUnit_Framework_TestCase
 {
@@ -76,7 +76,7 @@ class RatingTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException CoreDomain\NewsRating\InvalidRatingIdException
+     * @expectedException CoreDomain\News\InvalidRatingIdException
      */
     public function should_throw_invalid_rating_id_exception()
     {

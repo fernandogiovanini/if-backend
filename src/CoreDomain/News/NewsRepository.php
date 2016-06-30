@@ -11,4 +11,6 @@ interface NewsRepository
 {
     public function add(News $news);
     public function findByNewsId(NewsId $newsId);
+    public function count():int;
+    public function listAll(int $limit, int $offset);
 }

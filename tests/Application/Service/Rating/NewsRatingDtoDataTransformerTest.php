@@ -11,7 +11,7 @@ use Application\Service\Rating\NewsRatingDtoDataTransformer;
 use CoreDomain\News\News;
 use CoreDomain\News\NewsId;
 use CoreDomain\News\Url;
-use CoreDomain\NewsRating\Rating;
+use CoreDomain\News\Rating;
 use CoreDomain\User\Email;
 use CoreDomain\User\User;
 use CoreDomain\User\UserId;
@@ -42,15 +42,14 @@ class NewsRatingDtoDataTransformerTest extends \PHPUnit_Framework_TestCase
         $news = $this->createNews('7102c6a9-4926-43a8-869f-2f198222f1ec');
         $user = $this->createUser('95356bdd-45f6-4ed7-b6de-1c98c90873dc');
 
-        $newsRating = $news->rate(Rating::fodaSe(), $user);
+        $news->rate(Rating::fodaSe(), $user);
 
         $dataTransformer = new NewsRatingDtoDataTransformer();
-        $dataTransformer->write($newsRating);
+        $dataTransformer->write($news, $user, Rating::fodaSe());
 
         $newsRatingDto = $dataTransformer->read();
 
         $this->assertInstanceOf('Application\Service\Rating\NewsRatingDto', $newsRatingDto);
-        $this->assertEquals($newsRatingDto->getNewsRatingId(), $newsRating->id()->id());
         $this->assertEquals($newsRatingDto->getUserId(), $user->id()->id());
         $this->assertEquals($newsRatingDto->getNewsId(), $news->id()->id());
         $this->assertEquals($newsRatingDto->getRating(), Rating::fodaSe()->value());
